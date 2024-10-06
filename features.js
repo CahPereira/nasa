@@ -1,143 +1,146 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDgJAElA3fsD-bZ-LXMVJpGd_4cbglLV2U",
-    databaseURL:  "https://stellarfarmers-a849d-default-rtdb.firebaseio.com",
-    
-}
-
-
-// Get the current URL's query parameters
-const urlParams = new URLSearchParams(window.location.search);
-
-// Retrieve the 'address' parameter from the URL
-const address = urlParams.get('address');
-console.log(address);
-
-if (address) {
-    document.getElementById('addressContainer').textContent = `Address: ${address}`;
-    
-}
-
-// Your Google API key
-const googleApiKey = "AIzaSyDgJAElA3fsD-bZ-LXMVJpGd_4cbglLV2U";
+    databaseURL: "https://stellarfarmers-a849d-default-rtdb.firebaseio.com",
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// 1. Placeholder function to get FIPS code from an address (normally an API call)
 function getFIPSFromAddress(address) {
-  console.log(`Looking up FIPS code for address: ${address}`);
-  
-  // Simulating an API call and FIPS code retrieval
-  const simulatedFIPS = '06077';  // Replace this with actual logic to get FIPS
-  console.log(`FIPS code found: ${simulatedFIPS}`);
-  
-  return Promise.resolve(simulatedFIPS);
+    console.log(`Looking up FIPS code for address: ${address}`);
+    // Simulating an API call and FIPS code retrieval
+    return Promise.resolve('06077');
 }
 
-// 2. Function to get data for a crop in a specific year using the FIPS code
+function initializeDashboard(monthlyData) {
+    const dashboard = document.getElementById('dashboard');
+    const graphContainer = document.getElementById('graphContainer');
+    const graphCanvas = document.getElementById('graphCanvas');
+    let chart;
+
+    function createCard(title, value) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <div class="card-header">${title}</div>
+            <div class="card-value">${value}</div>
+        `;
+        card.addEventListener('click', () => showGraph(title));
+        return card;
+    }
+
+    function calculateAverage(key) {
+        return (monthlyData.reduce((sum, month) => sum + month[key], 0) / monthlyData.length).toFixed(2);
+    }
+
+    function calculateTotal(key) {
+        return monthlyData.reduce((sum, month) => sum + month[key], 0).toLocaleString();
+    }
+
+    const cardData = [
+        { title: 'Avg Temperature', value: `${calculateAverage('avgTemp')} K` },
+        { title: 'Avg Wind Speed', value: `${calculateAverage('windSpeed')} m/s` },
+        { title: 'Avg Wind Gust', value: `${calculateAverage('windGust')} m/s` },
+        { title: 'Total Revenue', value: `$${calculateTotal('revenue')}` },
+        { title: 'Total Seed Cost', value: `$${calculateTotal('seedCost')}` },
+        { title: 'Total Fertilizer Cost', value: `$${calculateTotal('fertilizerCost')}` },
+    ];
+
+    dashboard.innerHTML = '';
+    cardData.forEach(card => dashboard.appendChild(createCard(card.title, card.value)));
+
+    function showGraph(title) {
+        graphContainer.style.display = 'block';
+        const ctx = graphCanvas.getContext('2d');
+        
+        if (chart) chart.destroy();
+
+        const key = title.split(' ')[1].toLowerCase();
+        
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: monthlyData.map(d => d.month),
+                datasets: [{
+                    label: title,
+                    data: monthlyData.map(d => d[key]),
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `Monthly ${title}`
+                    }
+                }
+            }
+        });
+    }
+}
+
 function getCropDataForYear(fipsCode, crop, year) {
-  console.log(`Retrieving data for FIPS: ${fipsCode}, Crop: ${crop}, Year: ${year}`);
-  
-  const cropYearRef = ref(database, `${fipsCode}/${crop}/${year}`);
-  
-  get(cropYearRef).then((snapshot) => {
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      console.log(`Data for ${crop} in ${year} under FIPS ${fipsCode}:`, data);
-      processAndVisualizeData(data, year, crop);  // Process and visualize data
-    } else {
-      console.log(`No data available for ${crop} in ${year} under FIPS ${fipsCode}`);
-    }
-  }).catch((error) => {
-    console.error("Error retrieving data:", error);
-  });
-}
-
-// 3. Process the data and extract values for visualization
-function processAndVisualizeData(data, year, crop) {
-  console.log(`Processing data for ${crop} in ${year}`);
-  
-  const months = Object.keys(data);
-  const avgTemperatures = [];
-  const revenues = [];
-
-  months.forEach(month => {
-    const monthData = data[month][0];  // Access data for that month
-    avgTemperatures.push(monthData['Avg Temperature (K)']);
-    revenues.push(monthData['Revenue']);
-  });
-
-  console.log("Average Temperatures:", avgTemperatures);
-  console.log("Revenues:", revenues);
-
-  // Call the function to visualize data on a graph
-  displayGraph(avgTemperatures, revenues, months, year, crop);
-}
-
-// 4. Visualize the data using Chart.js
-function displayGraph(temperatures, revenues, months, year, crop) {
-  console.log(`Visualizing data for ${crop} in ${year}...`);
-
-  const ctx = document.getElementById('cropPerformanceChart').getContext('2d');
-  
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: months,  // Months as labels
-      datasets: [{
-        label: 'Average Temperature (K)',
-        data: temperatures,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        fill: false
-      },
-      {
-        label: 'Revenue',
-        data: revenues,
-        borderColor: 'rgba(255, 99, 132, 1)',
-        fill: false
-      }]
-    },
-    options: {
-      responsive: true,
-      title: {
-        display: true,
-        text: `${crop} Performance in ${year}`
-      },
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Months'
-          }
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Values'
-          }
+    console.log(`Retrieving data for FIPS: ${fipsCode}, Crop: ${crop}, Year: ${year}`);
+    
+    const cropYearRef = ref(database, `${fipsCode}/${crop}/${year}`);
+    
+    get(cropYearRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            console.log(`Data for ${crop} in ${year} under FIPS ${fipsCode}:`, data);
+            processAndVisualizeData(data, year, crop);
+        } else {
+            console.log(`No data available for ${crop} in ${year} under FIPS ${fipsCode}`);
         }
-      }
-    }
-  });
-  console.log("Graph displayed successfully.");
+    }).catch((error) => {
+        console.error("Error retrieving data:", error);
+    });
 }
 
-// 5. Main function to tie everything together
+function processAndVisualizeData(data, year, crop) {
+    console.log(`Processing data for ${crop} in ${year}`);
+    
+    const monthlyData = Object.keys(data).map(month => {
+        const monthData = data[month][0];
+        return {
+            month: month,
+            avgTemp: monthData['Avg Temperature (K)'],
+            revenue: parseInt(monthData['Revenue']),
+            windSpeed: monthData['Wind Speed (m s**-1)'],
+            windGust: monthData['Wind Gust (m s**-1)'],
+            seedCost: parseInt(monthData['Seed Cost']),
+            fertilizerCost: parseInt(monthData['Fertilizer Cost'])
+        };
+    });
+
+    console.log("Processed Monthly Data:", monthlyData);
+    initializeDashboard(monthlyData);
+}
+
 function startProcess(address, crop, year) {
-  console.log("Starting process...");
-
-  // Step 1: Get the FIPS code from the address
-  getFIPSFromAddress(address).then(fipsCode => {
-    // Step 2: Use FIPS code to retrieve data from Firebase
-    getCropDataForYear(fipsCode, crop, year);
-  });
+    console.log("Starting process...");
+    getFIPSFromAddress(address).then(fipsCode => {
+        getCropDataForYear(fipsCode, crop, year);
+    });
 }
 
-// Example: Call this function with the address, crop, and year you want to query
-// Address passed over from the hero page
-startProcess(address, "Corn", "2022");
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const address = urlParams.get('address');
+    
+    if (address) {
+        const addressContainer = document.getElementById('addressContainer');
+        if (addressContainer) {
+            addressContainer.textContent = `Address: ${address}`;
+        }
+        startProcess(address, "Corn", "2022");
+    } else {
+        console.error('No address provided in URL parameters');
+    }
+});
