@@ -22,7 +22,8 @@
   </div>
 <body>
     <div class="flex flex-col min-h-screen">
-        
+        <div class="caixa">
+
         <main class="flex-1">
             <div class="bg-image"> 
                 <div class="bg-text">
@@ -57,27 +58,27 @@
                     </div>
                 </div>
             </section>  -->
-        
-        <div class="container-fluid mt-3" id="grids">
-            <h2 style="font-size: 50px; padding-bottom:20px;">How it works</h2>
-            <div class="row">
-                <div class="col p-3">
-                    <img src="img1.png" alt="location" style="width:50%; padding-bottom:20px;">
-                    <h3 style="font-size: 30px">Enter Location</h3>
-                    <p>Input your land's address or coordinates.</p>
+            <div class="container-fluid mt-3" id="how-it-works">
+                <h2 style="font-size: 50px; padding-bottom:20px;">How it works</h2>
+                <div class="row">
+                    <div class="col">
+                        <img src="img1.png" alt="location" style="width:50%; padding-bottom:20px;">
+                        <h3 style="font-size: 30px">Enter Location</h3>
+                        <p>Input your land's address or coordinates.</p>
+                    </div>
+                    <div class="col">
+                        <img src="img2.png" alt="data" style="width:50%; padding-bottom:20px;">
+                        <h3 style="font-size: 30px">Receive Data</h3>
+                        <p>Access real-time information on soil quality, weather, water availability, and more</p>
+                    </div>
+                    <div class="col">    
+                        <img src="img3.png" alt="decision" style="width:50%; padding-bottom:20px;">                        
+                        <h3 style="font-size: 30px">Make Decisions</h3>
+                        <p>Use the data to guide harvesting, planting, or irrigation.</p>
+                    </div>
                 </div>
-                <div class="col p-3">
-                    <img src="img2.png" alt="data" style="width:50%; padding-bottom:20px;">
-                    <h3 style="font-size: 30px">Receive Data</h3>
-                    <p>Access real-time information on soil quality, weather, water availability, and more</p>
-                </div>
-                <div class="col p-3">    
-                    <img src="img3.png" alt="decision" style="width:50%; padding-bottom:20px;">                        
-                    <h3 style="font-size: 30px">Make Decisions</h3>
-                    <p>Use the data to guide harvesting, planting, or irrigation.</p>
-                </div>
-            </div>
-        </div> 
+            </div> 
+        </div>
             <!-- <section id="how-it-works" class="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
                 <div class="container">
                     <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">How It Works</h2>
@@ -109,7 +110,35 @@
                     </div>
                 </div>
             </section> -->
-            <section id="features" class="w-full py-12 md:py-24 lg:py-32">
+
+        <div class="box">
+            <div class="container-fluid mt-3" id="grids">
+                <h2 style="font-size: 50px; padding-bottom:20px;">Features</h2>
+                    <div class="row" id="feature">
+                        <div class="col p-3">
+                            <img src="img4.png" alt="environmental" style="width:50%; padding-bottom:20px;">
+                            <h3 style="font-size: 30px">Real-time Environmental Data</h3>
+                            <p>Daily updates on temperature, rainfall, and wind speed</p>
+                        </div>
+                        <div class="col p-3">
+                            <img src="img5.png" alt="soil" style="width:50%; padding-bottom:20px;">
+                            <h3 style="font-size: 30px">Soil Health Analysis</h3>
+                            <p>Reports on pH, moisture levels, and organic matter content</p>
+                        </div>
+                        <div class="col p-3">    
+                            <img src="img6.png" alt="crop" style="width:50%; padding-bottom:20px;">                        
+                            <h3 style="font-size: 30px">Crop Suitability Suggestions</h3>
+                            <p>Based on the land's soil and weather conditions</p>
+                        </div>
+                        <div class="col p-3">    
+                            <img src="img7.png" alt="water" style="width:50%; padding-bottom:20px;">                        
+                            <h3 style="font-size: 30px">Water Resources Availability</h3>
+                            <p>Mapping of water bodies and groundwater potential</p>
+                        </div>
+                    </div>
+            </div> 
+        </div>
+            <!-- <section id="features" class="w-full py-12 md:py-24 lg:py-32">
                 <div class="container">
                     <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">Features</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -151,10 +180,11 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
             <section id="contact" class="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
                 <div class="container">
-                    <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">Contact Us</h2>
+                    <h2 style="font-size: 50px; padding-bottom:20px; text-align: center;"><b>Contact us</b></h2>
+
                     <div class="max-w-md mx-auto">
                         <form class="space-y-4">
                             <input class="input" placeholder="Your Name" type="text">
