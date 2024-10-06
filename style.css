@@ -209,6 +209,9 @@ nav {
     border-radius: 0.25rem;
 }
 
+.img {
+    padding: 20px;
+}
 .textarea {
     min-height: 100px;
     resize: vertical;
