@@ -38,6 +38,8 @@ async function getFipsFromCoordinates(lat, lng) {
 }
 
 
+
+
 function createSelectors() {
     const container = document.createElement('div');
     container.innerHTML = `
@@ -166,14 +168,30 @@ function initializeDashboard(monthlyData, year, crop) {
 
     dashboard.innerHTML = '';
     cardData.forEach(card => dashboard.appendChild(createCard(card.title, card.value)));
-
-    function showGraph(title) {
-        graphContainer.style.display = 'block';
-        const ctx = graphCanvas.getContext('2d');
-        
-        if (chart) chart.destroy();
+    function resetCanvas() {
+        const graphContainer = document.getElementById('graphContainer');
+        const oldCanvas = document.getElementById('graphCanvas');
+        const newCanvas = document.createElement('canvas');
+        newCanvas.id = 'graphCanvas';
+        if (oldCanvas) {
+            oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);
+        } else {
+            graphContainer.appendChild(newCanvas);
+        }
+        return newCanvas.getContext('2d');
+    }
     
-        // New key determination logic
+    // Modify your showGraph function to use resetCanvas
+    let currentChart = null;
+    
+    function showGraph(title) {
+        const graphContainer = document.getElementById('graphContainer');
+        graphContainer.style.display = 'block';
+        
+        // Reset the canvas and get the new context
+        const ctx = resetCanvas();
+        
+        // Determine which key to use for the data
         let key;
         switch (title) {
             case 'Avg Temperature':
@@ -199,7 +217,8 @@ function initializeDashboard(monthlyData, year, crop) {
                 return;
         }
         
-        chart = new Chart(ctx, {
+        // Create the new chart
+        currentChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: monthlyData.map(d => d.month),
@@ -227,7 +246,7 @@ function initializeDashboard(monthlyData, year, crop) {
         });
     }
 }
-    
+
     
 
 
