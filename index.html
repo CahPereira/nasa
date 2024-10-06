@@ -32,7 +32,8 @@
 
                 <div class="form-container" align="center" style="padding-top: 30px;">
                     <gmpx-api-loader key="AIzaSyDgJAElA3fsD-bZ-LXMVJpGd_4cbglLV2U" solution-channel="GMP_GE_placepicker_v1"></gmpx-api-loader>
-                    <gmpx-place-picker placeholder="Enter an Address" style="width: 400px; padding: 10px; font-size: 16px;"> </gmpx-place-picker>
+                    <gmpx-place-picker placeholder="Enter an Address" id="place-picker" style="width: 400px; padding: 10px; font-size: 16px;"> </gmpx-place-picker>
+                    <input name="address" type="hidden" id="selected-address"/>
                     <button type="submit" style="
                         background-color: #b3e156;
                         border: none;
@@ -49,18 +50,18 @@
                 </div>
                 <script>
                     document.addEventListener('DOMContentLoaded', () => {
-                        // Your existing JavaScript code here, e.g., processForm function.
-                        window.processForm = function() {
-                            let user_address = document.querySelector('gmpx-place-picker');
-                            // console.log('Page loaded successfully');
-                            console.dir(user_address);
-                            alert("Button clicked!");
-                            let address = user_address.value;
-                            console.log("Address:", address); // Log the address value
-                            window.location.href = `features.html?address=${address}`; // Redirect with parameter
-                        };
+                        const picker = document.getElementById('place-picker');
+                        const addressInput = document.getElementById('selected-address');
+                
+                        // Move the event listener outside of processForm
+                        picker.addEventListener('gmpx-placechange', () => {
+                            const formattedAddress = picker.value.formattedAddress;
+                            addressInput.value = formattedAddress;
+                            console.log("Address:", formattedAddress); 
+                            window.location.href = `features.html?address=${encodeURIComponent(formattedAddress)}`; 
+                        });                
                     });
-                </script>
+                </script>                            
             </div>
         <div class="container-fluid mt-3" id="grids">
             <h2 style="font-size: 50px">How it works</h2>
