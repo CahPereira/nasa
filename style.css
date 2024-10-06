@@ -17,6 +17,9 @@
     margin-left: 0.5rem;
 }
 
+.example{
+    padding-top: 60px;
+}
 .box{
     overflow: hidden;
   
@@ -56,7 +59,10 @@ p{
   .bg-image {
     /* The image used */
     background-image: url("map.jpg");
-    padding: 90px;
+    padding-top: 90px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-bottom: 60px;
     /* Full height */
     height: 100%; 
     width: 100%;
@@ -450,3 +456,34 @@ main {
 footer {
     border-top: 1px solid #e5e7eb;
 }
+
+form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+  }
+  
+  form.example button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+  }
+  
+  form.example button:hover {
+    background: #0b7dda;
+  }
+  
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
