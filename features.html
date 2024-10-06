@@ -9,17 +9,6 @@
     <h1>Address Information</h1>
     <div id="addressContainer"></div> <!-- This is where the address will be displayed -->
 
-    <script>
-        // Get the current URL's query parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        
-        // Retrieve the 'address' parameter from the URL
-        const address = urlParams.get('address');
-
-        // Display the 'address' in the HTML element with id 'addressContainer'
-        if (address) {
-            document.getElementById('addressContainer').textContent = `Address: ${address}`;
-        }
-    </script>
+    <script src="features.js"></script>
 </body>
 </html>
