@@ -22,6 +22,7 @@
 }
 .box{
     overflow: hidden;
+    text-align: center;
   
 }
 #feature :hover {
@@ -42,6 +43,29 @@
 p{
     font-size: 20px;
 }
+    /* margin: 0;
+    padding: 0;
+} */
+/* Header/logo Title */
+
+.input_form {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    max-width: 600px; /* Adjust this value as needed */
+}
+
+
+input_value{
+    width: 100%;
+    padding: 0.25rem;
+    font-size: 8%;
+    border: 3 solid #d1d5db;
+    border-radius: 0.25rsem;
+    margin-left: 0.25rem;
+} 
+
+
 
 
 .header {
@@ -63,6 +87,7 @@ p{
     padding-left: 150px;
     padding-right: 150px;
     padding-bottom: 60px;
+    padding: 100px;
     /* Full height */
     height: 100%; 
     width: 100%;
@@ -79,6 +104,7 @@ p{
   #how-it-works{
     text-align: center;
     padding: 30px;
+    padding: 50px;
   }
   /* Position text in the middle of the page/image */
   .bg-text {
@@ -154,6 +180,10 @@ body {
     gap:0;
     padding: 0 1rem;
 }
+.container {
+    width: 100%;
+    text-align: center;
+}
 
 /* Header styles */
 header {
@@ -220,6 +250,25 @@ nav {
     background-color: transparent;
     color: #3b82f6;
     border: 1px solid #3b82f6;
+}
+
+#data_submit_button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+
+.button-container {
+    text-align: center;
 }
 
 .button-sm {
@@ -486,4 +535,24 @@ form.example input[type=text] {
     content: "";
     clear: both;
     display: table;
+  }
+#place-picker-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #place-picker-container {
+    text-align: left;
+  }
+
+
+#place-picker-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #place-picker-container {
+    text-align: left;
   }

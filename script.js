@@ -15,6 +15,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const placePicker = document.getElementById('placePicker');
+        
+        placePicker.addEventListener('gmpx-placechange', function(event) {
+            const place = event.detail;
+            if (place) {
+                const address = place.formattedAddress;
+                const encodedAddress = encodeURIComponent(address);
+                window.location.href = `features.html?address=${encodedAddress}`;
+            }
+        });
+    });
     // Handle active section highlighting
     const sections = ['home', 'how-it-works', 'features', 'contact'];
     const observerOptions = {
@@ -60,3 +72,24 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Form submitted');
     });
 });
+
+
+function handleSubmit(event) { 
+    event.preventDefault();
+
+    const placePicker = document.getElementById('placePicker');
+    const selectedPlace = placePicker.value;
+
+    if(selectedPlance) { 
+
+        const encodedAddress = encodeURIComponent(selectedPlace);
+
+        window.location.href = 'results.html?address=${encodedAddress}';
+
+    } else  {
+        alert('Please select a place');
+    }
+
+
+    
+}
