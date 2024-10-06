@@ -15,18 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const placePicker = document.getElementById('placePicker');
-        
-        placePicker.addEventListener('gmpx-placechange', function(event) {
-            const place = event.detail;
-            if (place) {
-                const address = place.formattedAddress;
-                const encodedAddress = encodeURIComponent(address);
-                window.location.href = `features.html?address=${encodedAddress}`;
-            }
-        });
+    const placePicker = document.getElementById('placePicker');
+    
+    // Listen for changes in the place picker
+    placePicker.addEventListener('gmpx-placechange', function(event) {
+        const place = event.detail;
+        if (place) {
+            const address = place.formattedAddress;
+            // You can store or manipulate the address here if needed
+        }
     });
+
     // Handle active section highlighting
     const sections = ['home', 'how-it-works', 'features', 'contact'];
     const observerOptions = {
@@ -64,32 +63,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Handle form submission (you can customize this part)
-    const form = document.querySelector('form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        // Add your form submission logic here
-        console.log('Form submitted');
-    });
+    // // Handle form submission
+    // const form = document.querySelector('form');
+    // form.addEventListener('submit', handleSubmit);
 });
-
 
 function handleSubmit(event) { 
     event.preventDefault();
 
-    const placePicker = document.getElementById('placePicker');
+    const placePicker = document.querySelector('gmpx-place-picker');
     const selectedPlace = placePicker.value;
 
-    if(selectedPlance) { 
-
+    if (selectedPlace) { 
         const encodedAddress = encodeURIComponent(selectedPlace);
-
-        window.location.href = 'results.html?address=${encodedAddress}';
-
+        // Redirect to the new HTML page with the address parameter
+        // window.location.href = `features.html?address=${encodedAddress}`;
     } else  {
         alert('Please select a place');
     }
-
-
-    
 }

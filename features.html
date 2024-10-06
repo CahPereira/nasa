@@ -3,42 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        #addressDisplay {
-            background-color: #e9e9e9;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-    </style>
+    <title>Features Page</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Search Results</h1>
-        <p>The address you searched for is:</p>
-        <div id="addressDisplay"></div>
-    </div>
+    <h1>Address Information</h1>
+    <div id="addressContainer"></div> <!-- This is where the address will be displayed -->
 
-    <script src = "results.js"></script>
-    
+    <script>
+        // Get the current URL's query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Retrieve the 'address' parameter from the URL
+        const address = urlParams.get('address');
+
+        // Display the 'address' in the HTML element with id 'addressContainer'
+        if (address) {
+            document.getElementById('addressContainer').textContent = `Address: ${address}`;
+        }
+    </script>
 </body>
 </html>
